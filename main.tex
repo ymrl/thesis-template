@@ -1,0 +1,89 @@
+% 独自のコマンド
+
+% ■ アブストラクト
+%  \begin{jabstract} 〜 \end{jabstract}  ：日本語のアブストラクト
+%  \begin{eabstract} 〜 \end{eabstract}  ：英語のアブストラクト
+
+% ■ 謝辞
+%  \begin{acknowledgment} 〜 \end{acknowledgment}
+
+% ■ 文献リスト
+%  \begin{bib}[100] 〜 \end{bib}
+
+
+\newif\ifjapanese
+
+\japanesetrue  % 論文全体を日本語で書く（英語で書くならコメントアウト）
+
+\ifjapanese
+  \documentclass[a4j,twoside,openany,11pt]{jreport} % 両面印刷の場合。余白を綴じ側に作って右起こし。
+  %\documentclass[a4j,11pt]{jreport}                % 片面印刷の場合。
+  \renewcommand{\bibname}{参考文献}
+  \newcommand{\acknowledgmentname}{謝辞}
+\else
+  \documentclass[a4paper,11pt]{report}
+  \newcommand{\acknowledgmentname}{Acknowledgment}
+\fi
+\usepackage{thesis}
+\usepackage{ascmac}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{url}
+\bibliographystyle{jplain}
+
+\bindermode  % バインダ用余白設定
+
+% 日本語情報（必要なら）
+\jclass  {修士論文}                             % 論文種別
+\jtitle    {修士論文用 \LaTeX\ テンプレート}    % タイトル。改行する場合は\\を入れる
+\juniv    {慶應義塾大学大学院}                  % 大学名
+\jfaculty  {政策・メディア研究科}               % 学部、学科
+\jauthor  {ほげ山 ふう助}                       % 著者
+\jhyear  {24}                                   % 平成○年度
+\jsyear  {2012}                                 % 西暦○年度
+\jkeyword  {\LaTeX、テンプレート、修士論文}     % 論文のキーワード
+\jproject{インタラクションデザインプロジェクト} %プロジェクト名
+\jdate{2013年1月}
+
+% 英語情報（必要なら）
+\eclass  {Master's Thesis}                            % 論文種別
+\etitle    {A \LaTeX Template for Master Thesis}      % タイトル。改行する場合は\\を入れる
+\euniv  {Keio University}                             % 大学名
+\efaculty  {Graduate School of Media and Governance}  % 学部、学科
+\eauthor  {Fusuke Hogeyama}                           % 著者
+\eyear  {2012}                                        % 西暦○年度
+\ekeyword  {\LaTeX, Templete, Master Thesis}          % 論文のキーワード
+\eproject{Interaction Design Project}                 %プロジェクト名
+\edate{January 2013}
+
+
+
+
+
+\begin{document}
+
+\ifjapanese
+  \jmaketitle    % 表紙（日本語）
+\else
+  \emaketitle    % 表紙（英語）
+\fi
+
+\include{00_abstract}  % アブストラクト。要独自コマンド、include先参照のこと
+
+\tableofcontents  % 目次
+\listoffigures    % 表目次
+\listoftables    % 図目次
+
+\pagenumbering{arabic}
+
+\include{01}  % 本文1
+\include{02}  % 本文2
+\include{03}  % 本文3
+\include{04}  % 本文4
+
+\include{90_acknowledgment}  % 謝辞。要独自コマンド、include先参照のこと
+\include{91_bibliography}  % 参考文献。要独自コマンド、include先参照のこと
+\appendix
+\include{92_appendix}    % 付録
+
+\end{document}

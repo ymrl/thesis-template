@@ -1,0 +1,210 @@
+% 変数定義
+\makeatletter
+
+% 変数読み込み
+\def\jclass#1{\gdef\@jclass{#1}}
+\def\jtitle#1{\gdef\@jtitle{#1}}
+\def\juniv#1{\gdef\@juniv{#1}}
+\def\jfaculty#1{\gdef\@jfaculty{#1}}
+\def\jauthor#1{\gdef\@jauthor{#1}}
+\def\jadvisor#1#2{\gdef\@jadvisor{#1}\gdef\@jposition{#2}}
+\def\jhyear#1{\gdef\@jhyear{#1}}
+\def\jsyear#1{\gdef\@jsyear{#1}}
+\def\jkeyword#1{\gdef\@jkeyword{#1}}
+\def\jproject#1{\gdef\@jproject{#1}}
+\def\jdate#1{\gdef\@jdate{#1}}
+
+\def\eclass#1{\gdef\@eclass{#1}}
+\def\etitle#1{\gdef\@etitle{#1}}
+\def\euniv#1{\gdef\@euniv{#1}}
+\def\efaculty#1{\gdef\@efaculty{#1}}
+\def\eauthor#1{\gdef\@eauthor{#1}}
+\def\eadvisor#1#2{\gdef\@eposition{#1}\gdef\@eadvisor{#2}}
+\def\eyear#1{\gdef\@eyear{#1}}
+\def\ekeyword#1{\gdef\@ekeyword{#1}}
+\def\eproject#1{\gdef\@eproject{#1}}
+\def\edate#1{\gdef\@edate{#1}}
+
+% 余白設定（左右対称）
+\setlength{\textwidth}{15.92cm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\topmargin}{-1cm}
+\setlength{\textheight}{23.5cm}
+\setlength{\footskip}{18mm}
+
+% 余白設定（左綴じ用）
+\newcommand{\bindermode}{%
+  \setlength{\textwidth}{15cm}
+  \setlength{\oddsidemargin}{13mm}
+  \setlength{\evensidemargin}{0mm}
+  \setlength{\topmargin}{-1cm}
+  \setlength{\textheight}{23.5cm}
+  \setlength{\footskip}{18mm}
+}
+
+% 表紙用行間広め定義
+\newenvironment{lineskiptitle}{%
+  \baselineskip = 1.5cm
+}
+
+% 表紙の定義（日本語）
+\def\jmaketitle{\par
+  \begingroup
+  \@jmaketitle
+  \endgroup
+}
+\def\@jmaketitle{%
+  \thispagestyle{empty}
+  \begin{center}
+    {\Large \@jclass\ \ \ \@jsyear 年度（平成\@jhyear 年度）}
+    \vfill
+    \begin{lineskiptitle}    
+    {\huge\bf \@jtitle}
+    \end{lineskiptitle}
+    \vfill
+    {\Large \@juniv\ \@jfaculty}
+    \vspace{0.5cm}\par
+    {\LARGE \@jauthor}
+    \vspace{2cm}\par
+    {\Large \@jproject}
+    \vspace{0.5cm}\par
+    {\Large \@jdate}
+  \end{center}
+  %\newpage
+  \cleardoublepage
+  \pagenumbering{roman}
+}
+
+% 表紙の定義（英語）
+\def\emaketitle{\par
+  \begingroup
+  \@emaketitle
+  \endgroup
+}
+\def\@emaketitle{%
+  \thispagestyle{empty}
+  \begin{center}
+    {\Large \@eclass\  (Academic Year \@eyear)}
+    \vfill
+    \begin{lineskiptitle}    
+    \fbox{\Huge\sf \@etitle}
+    \end{lineskiptitle}
+    \vfill
+    {\Large \@euniv\par \@efaculty}
+    \vspace{0.5cm}\par
+    {\LARGE \@eauthor}
+    \vspace{2cm}\par
+    {\Large \@eproject}
+    \vspace{0.5cm}\par
+    {\Large \@edate}
+  \end{center}
+  %\newpage
+  \cleardoublepage
+  \pagenumbering{roman}
+}
+
+% アブストラクト用行間広め設定
+\newenvironment{lineskipabst}{%
+  \baselineskip = 1cm
+}
+
+% アブストラクトの定義（日本語）
+\newenvironment{jabstract}{%
+  \begin{center}
+    {\Large\bf \@jclass　\@jsyear 年度（平成\@jhyear 年度）}
+    \vspace{0.5cm}\par
+    \begin{lineskipabst}
+    {\LARGE\bf \@jtitle}\vspace{2cm}
+    \end{lineskipabst}
+  \end{center}
+  \parindent=1zw
+  \section*{論文要旨}
+  \ifjapanese \else \renewcommand{\baselinestretch}{1.15}\selectfont \fi
+}{
+  \section*{キーワード}
+  \@jkeyword \par
+  \vspace{2.5cm}\par
+  {\@juniv} {\@jfaculty}
+  \begin{flushright}
+    {\@jauthor}
+  \end{flushright} 
+
+  \cleardoublepage
+  \ifjapanese \parindent=1zw \else \parindent=1.6zw \fi
+  \renewcommand{\baselinestretch}{1.0}\selectfont
+}
+
+% アブストラクトの定義（英語）
+\newenvironment{eabstract}{%
+  \begin{center}
+    {\Large\bf Abstract Of \@eclass\ \ \ Academic Year \@eyear}
+    \vspace{0.5cm}\par
+    \begin{lineskipabst}
+    {\LARGE\sf \@etitle}\vspace{2cm}
+    \end{lineskipabst}
+  \end{center}
+  \parindent=1.6zw
+  \section*{Summary}
+  \ifjapanese \renewcommand{\baselinestretch}{0.89}\selectfont \fi
+}{
+  \section*{Keywords}
+  \@ekeyword \par
+  \vspace{2.5cm}\par
+  {\@efaculty} \par
+  {\@euniv} 
+  \begin{flushright}
+    {\@eauthor}
+  \end{flushright} 
+
+  \cleardoublepage
+  \ifjapanese \parindent=1zw \else \parindent=1.6zw \fi
+  \renewcommand{\baselinestretch}{1.0}\selectfont
+}
+
+% 目次環境再定義
+\renewcommand{\tableofcontents}{%
+  \section*{\contentsname}
+  \@starttoc{toc}
+  \newpage
+}
+
+% 図目次環境再定義
+\renewcommand{\listoffigures}{%
+  \section*{\listfigurename}
+  \@starttoc{lof}
+  \newpage
+}
+
+% 表目次環境再定義
+\renewcommand{\listoftables}{%
+  \section*{\listtablename}
+  \@starttoc{lot}
+  \cleardoublepage
+}
+
+% 謝辞環境の作成
+\newenvironment{acknowledgment}{%
+  \addcontentsline{toc}{chapter}{\acknowledgmentname}
+  \chapter*{\acknowledgmentname}
+}{}
+
+% 参考文献環境の作成
+\newenvironment{bib}[1][100]{%
+  \addcontentsline{toc}{chapter}{\bibname}
+}{}
+
+% subsubsection 環境の設定変更
+\setcounter{secnumdepth}{3}
+\renewcommand\thesubsubsection{(\arabic{subsubsection})}
+
+% 箇条書きの行間設定
+\renewenvironment{itemize}{%
+   \begin{list}{\parbox{1zw}{$\bullet$}}{%
+      \setlength{\itemsep}{0em}
+      \setlength{\parsep}{0em}
+   }}{%
+   \end{list}
+}
+
+\makeatother

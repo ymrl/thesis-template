@@ -1,0 +1,364 @@
+\chapter{本テンプレートの使い方}
+\label{chap:howto}
+
+本章では、本テンプレートの具体的な使用方法を解説する。基本的には、{\tt main.tex} を上から順に修正していけばよいだけ。 
+
+
+\section{テンプレートの構成}
+
+このテンプレートは、表\ref{tb:files}のファイルで構成されている。
+
+\begin{table}[htbp]
+  \caption{構成ファイル}
+  \label{tb:files}
+  \begin{center}\begin{tabular}{c|l}
+    \hline
+    ファイル名&用途\\\hline\hline
+    {\tt main.tex}&メインのファイル。これを編集していく\\\hline
+    {\tt thesis.sty}&論文のスタイルを定義したファイル。基本的には手は加えない\\\hline
+    {\tt *.tex}&{\tt main.tex}に{\tt include}されるファイル群\\\hline
+    {\tt *.eps}&画像ファイル\\\hline
+    {\tt main.bib}&参考文献用のBibTeXファイル\\\hline
+    {\tt Makefile}&Makefile。次節以降で説明\\\hline
+    {\tt .gitignore}&Git用設定ファイル\\\hline
+  \end{tabular}\end{center}
+\end{table}
+
+\section{コンパイル}
+このテンプレートの\LaTeX ファイルをコンパイルしてPDFファイルを生成するには、ターミナルを開いて以下のようにする。
+
+\begin{itembox}[l]{コマンド実行例}
+\begin{verbatim}
+% make
+\end{verbatim}
+\end{itembox}
+
+こうすることで、\verb|platex|コマンド、\verb|pbibtex|コマンド、\verb|platex|コマンド2回、\verb|dvipdfmx|コマンドが全て実行され、{\tt main.pdf}が生成される。
+
+コンパイルによって生成されたファイルを全て消すには、以下のようにする。
+
+\begin{itembox}[l]{コマンド実行例}
+\begin{verbatim}
+% make clean
+\end{verbatim}
+\end{itembox}
+
+\section{設定}
+
+以下、{\tt main.tex}に対して行うべき設定を、このファイルの中に書いてある順に沿って説明する。
+
+\subsection{論文全体の言語の設定}
+\label{sec:lang}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\japanesetrue	% 論文全体を日本語で書く（英語で書くならコメントアウト）
+\end{verbatim}
+\end{itembox}
+
+ここでは論文全体の言語を設定する。日本語に設定すれば、『章』『目次』『謝辞』などが日本語で出力されて、行頭のインデントなども日本語の仕様になる。英語にした場合は、これらはそれぞれ『Chapter』『Table of Contents』『Acknowledgment』な体裁になる。インデントも行間も、英語用の設定が適用される。
+
+\verb|\japanesetrue| をコメントアウトしなければ日本語に、コメントアウトすれば英語に設定される。
+
+
+\subsection{余白の設定}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\bindermode	% バインダ用余白設定
+\end{verbatim}
+\end{itembox}
+
+このテンプレートの出力はA4用紙。ここではこれの四辺の余白を設定する。
+
+最終的にバインダで綴じて提出する場合、余白を左右対称にしてしまうと、見かけ上のバランスがとても悪くなる。これを解消するため、あらかじめ左側の余白を大きく取っておく。
+
+\verb|\bindermode| をコメントアウトしなければ左綴じ用の余白に、コメントアウトすれば左右対称の余白に設定される。ぼくのいた研究室では最後はバインダに綴じるのが慣例だった。
+
+
+\subsection{論文情報の設定}
+\label{sec:meta}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+% 日本語情報（必要なら）
+\jclass  {修士論文}                             % 論文種別
+\jtitle    {修士論文用 \LaTeX\ テンプレート}    % タイトル。改行する場合は\\を入れる
+\juniv    {慶應義塾大学大学院}                  % 大学名
+\jfaculty  {政策・メディア研究科}               % 学部、学科
+\jauthor  {ほげ山 ふう助}                       % 著者
+\jhyear  {24}                                   % 平成○年度
+\jsyear  {2012}                                 % 西暦○年度
+\jkeyword  {\LaTeX、テンプレート、修士論文}     % 論文のキーワード
+\jproject{インタラクションデザインプロジェクト} %プロジェクト名
+\jdate{2013年1月}
+
+% 英語情報（必要なら）
+\eclass  {Master's Thesis}                            % 論文種別
+\etitle    {A \LaTeX Template for Master Thesis}      % タイトル。改行する場合は\\を入れる
+\euniv  {Keio University}                             % 大学名
+\efaculty  {Graduate School of Media and Governance}  % 学部、学科
+\eauthor  {Fusuke Hogeyama}                           % 著者
+\eyear  {2012}                                        % 西暦○年度
+\ekeyword  {\LaTeX, Templete, Master Thesis}          % 論文のキーワード
+\eproject{Interaction Design Project}                 %プロジェクト名
+\edate{January 2013}
+\end{verbatim}
+\end{itembox}
+
+ここでは論文のタイトルや著者の氏名などのメタデータを記述する。ここで書いたデータは、表紙とアブストラクトのページに使われる。必ずしも日本語と英語の両方を設定しなければいけないわけではなくて、自分が必要とする方だけ記述すればよい。
+
+タイトルが長過ぎる場合は、表紙やアブストラクトのページでは自動で折り返して出力される。もし改行位置を自分で指定したい場合は、その場所に \verb|\\| を入力する。
+
+
+\section{出力}
+
+\verb|\begin{document}| から \verb|\end{document}| に記述した部分が、実際に{\tt DVI}（最終的には{\tt PDF}）ファイルとして出力される。
+
+\subsection{外部ファイルの読み込み（{\tt include}）}
+
+出力部分の具体的な説明の前に、外部ファイルを読み込む方法を説明する。
+
+\verb|\begin{document}| から \verb|\end{document}| の間では、\verb|\include| コマンドを使うことで、別の {\tt *.tex} ファイルを読み込ませられる。 
+
+\begin{itembox}[l]{{\tt include}しない場合}
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\begin{document}
+  \begin{jabstract}
+  ほげほげ
+  \end{jabstract}
+\end{document}
+\end{verbatim}
+\end{itembox}
+\end{itembox}
+
+\begin{itembox}[l]{{\tt include}する場合}
+\begin{minipage}{0.5\hsize}
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\begin{document}
+\include{01} % 01.texをinclude
+\end{document}
+\end{verbatim}
+\end{itembox}
+\end{minipage}
+\begin{minipage}{0.5\hsize}
+\begin{itembox}[l]{{\tt 01.tex}}
+\begin{verbatim}
+\begin{jabstract}
+ほげほげ
+\end{jabstract}
+\end{verbatim}
+\end{itembox}
+\end{minipage}
+\end{itembox}
+
+{\tt include}しない場合とする場合を比較するとこのとおり。どちらも出力結果は一緒。{\tt include}する場合は、読み込ませたい箇所に、読み込ませたい{\tt *.tex}ファイルの名前を、拡張子を除いて \verb|\include| コマンドで書けばよい。
+
+\verb|\include| コマンドを用いるか用いないかは、たぶん文書量や個人の好みに依る。例えば章ごとに別のファイルにしておけば、修正箇所を探すときの手間が多少は省けるかもしれない。Gitで人と共有しつつ校正を頼むときにもファイルが分かれていたほうがコンフリクトを起こしにくい。
+
+
+\subsection{表紙の出力}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\ifjapanese
+  \jmaketitle    % 表紙（日本語）
+\else
+  \emaketitle    % 表紙（英語）
+\fi
+\end{verbatim}
+\end{itembox}
+
+最初に、表紙を出力する。
+
+\verb|\jmaketitle| が実行されると日本語の表紙が、\verb|\emaketitle| が実行されると英語の表紙がそれぞれ出力される。日本語の表紙には、第\ref{sec:meta}節で設定したうちの日本語の情報が、英語の表紙には同節で設定したうち英語の情報が、それぞれ参照されて、表記される。
+
+デフォルトでは第\ref{sec:lang}説で設定した言語の表紙のみが出力されるようになっている。
+
+\subsection{アブストラクトの出力}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\include{00_abstract}	% アブストラクト。要独自コマンド、include先参照のこと
+\end{verbatim}
+\end{itembox}
+
+表紙の次は、アブストラクト。
+
+アブストラクトを出力するには、出力したい位置に、指定のコマンドを用いて文章を書き下せばよい。{\tt main.tex}に直接書いてもよいし、先述した \verb|\include| コマンドを利用して{\tt include}してもよい。
+
+\verb|\begin{jabstract}| から \verb|\end{jabstract}| の間に書いた文章が日本語のアブストラクトとして、\verb|\begin{eabstract}| から \verb|\end{eabstract}| の間に書いた文章が英語のアブストラクトとして、それぞれ独立したページに出力される。
+
+アブストラクトのページには、論文のタイトルやキーワードなどが、第\ref{sec:meta}節で設定した情報をもとにして自動で表記される。
+
+日本語か英語のどちらか一方のみでよい場合は、不要な言語の方のコマンドを削除すればよい。これは、\verb|\begin| と \verb|\end| というコマンド自身も含めて削除する、ということで、\verb|\begin| と \verb|\end| の間を空っぽにするという意味ではないので注意。
+
+
+
+\subsection{目次類の出力}
+\label{sec:toc}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\tableofcontents	% 目次
+\listoffigures		% 表目次
+\listoftables		% 図目次
+\end{verbatim}
+\end{itembox}
+
+アブストラクトの次に、目次。文書の目次、図の目次、表の目次の三種類。
+
+目次類を出力するには、出力したい位置に指定のコマンドを書けばよい。
+
+これらのコマンドは、コンパイル時点での一時ファイル\footnote{{\tt *.toc}、{\tt *.lof}、{\tt *.lot}}の情報を、目次として体裁を整えて出力するもの。一時ファイルは、\verb|\begin{document}| から \verb|\end{document}| の間の章や節、図や表をコンパイルするときに、ついでに情報を取得しておいて生成される。
+
+つまり気をつけなければいけないのは、コンパイルを一回しただけでは、一時ファイルが最新の状態に更新されるだけで、肝心の目次は正しい情報では出力されないということ。目次類を正しい情報で出力するには、最低二回のコンパイルが必要。一回目のコンパイルで一時ファイルが最新の情報に更新されて、二回目のコンパイルで初めて、その最新の一時ファイルの情報をもとに目次が出力される。
+
+だから、文書に何らかの修正をして保存したあとは、最低でも二回、連続してコンパイルしないといけないことに注意する。
+
+図や表を一つも使用していない場合は、目次名のみが書かれた空白のページが出力される。もしこれが不要な場合は、該当するコマンドをコメントアウトすればよい。
+
+
+\subsection{本文の出力}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\include{01}	% 本文1
+\include{02}	% 本文2
+\include{03}	% 本文3
+\include{04}	% 本文4
+\end{verbatim}
+\end{itembox}
+
+目次に続いて、論文のメイン、本文を記述する。アブストラクトと同様で、{\tt main.tex}に直接書くか、\verb|\include| コマンドを利用して別に用意したファイルを{\tt include}する。
+
+本文の書き方は、第\ref{chap:latex}章で詳しく説明する。
+
+
+\subsection{謝辞の出力}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\include{90_acknowledgment}	% 謝辞。要独自コマンド、include先参照のこと
+\end{verbatim}
+\end{itembox}
+
+本文のあとには、謝辞を出力する。\verb|begin{acknowledgment}| から \verb|end{acknowledgment}| の間に書いた文章が、謝辞として独立したページに出力される。アブストラクトや本文と同じで、{\tt main.tex}に直接書いてもよいし、\verb|\include| コマンドを利用して{\tt include}してもよい。
+
+
+\subsection{参考文献の出力}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\include{91_bibliography}	% 参考文献。要独自コマンド、include先参照のこと
+\end{verbatim}
+\end{itembox}
+
+謝辞に続いて、参考文献を出力する。
+
+参考文献リストは、\verb|\begin{bib}| から \verb|\end{bib}| の間に、\verb|\bibitem| コマンドを使って書く。
+
+BibTeXを使う場合は、以下のようにする。
+
+\begin{itembox}[l]{{\tt 91\_bibliography.tex}}
+\begin{verbatim}
+\begin{bib}[100]
+\bibliography{main}
+\end{bib}
+\end{verbatim}
+\end{itembox}
+
+こうすると、\verb|main.bib|から使用した参考文献のみを抽出して出力してくれる。\verb|main.bib|の中身は以下のようになっていて、気の利いた論文検索サイトであればBibTeXをコピペできるようになっているので簡単に作れるはず。
+
+
+\begin{itembox}[l]{{\tt 91\_bibliography.tex}}
+\begin{verbatim}
+@article{hoge09,
+    author  = "ほげ山太郎 and ほげ山次郎",
+    yomi    = "ほげやまたろう",
+    title   = "ほげほげ理論のHCI分野への応用",
+    journal = "ほげほげ学会論文誌",
+    volume  = "31",
+    number  = "3",
+    pages   = "194-201",
+    year    = "2009",
+}
+@inproceedings{hoge08,
+    author     = "Taro Hogeyama and Jiro Hogeyama",
+    title      = "The Theory of Hoge",
+    booktitle  = "The Proceedings of The Hoge Society",
+    year       = "2008"
+}
+\end{verbatim}
+\end{itembox}
+
+
+以下は、BibTeXを使わないで手で書く例。
+
+\begin{itembox}[l]{{\tt 91\_bibliography.tex}}
+\begin{verbatim}
+@article{hoge09,
+    author  = "ほげ山太郎 and ほげ山次郎",
+    yomi    = "ほげやまたろう",
+    title   = "ほげほげ理論のHCI分野への応用",
+    journal = "ほげほげ学会論文誌",
+    volume  = "31",
+    number  = "3",
+    pages   = "194-201",
+    year    = "2009",
+}
+@inproceedings{hoge08,
+    author     = "Taro Hogeyama and Jiro Hogeyama",
+    title      = "The Theory of Hoge",
+    booktitle  = "The Proceedings of The Hoge Society",
+    year       = "2008"
+}
+\end{verbatim}
+\end{itembox}
+
+
+英語の文献の場合、慣例的に書誌名をイタリック体にすることが多いらしい。
+
+\begin{itembox}[l]{{\tt 91\_bibliography.tex}}
+\begin{verbatim}
+\begin{bib}[100]
+\begin{thebibliography}{#1}
+% \bibitem{参照用名称}
+%   著者名： 
+%   \newblock 文献名，
+%   \newblock 書誌情報，出版年．
+
+\bibitem{hoge09}
+  ほげ山太郎，ほげ山次郎：
+  \newblock ほげほげ理論のHCI分野への応用，
+  \newblock ほげほげ学会論文誌，Vol.31，No.3，pp.194-201，2009．
+
+\bibitem{hoge08}
+  Taro Hogeyama, Jiro Hogeyama:
+  \newblock The Theory of Hoge,
+  \newblock {\it The Proceedings of The Hoge Society}, 2008.
+\end{thebibliography}
+\end{bib}
+\end{verbatim}
+\end{itembox}
+
+\verb|\bibitem| コマンド中、参照用名称は、本文から参考文献を参照するときに使うので、忘れずに書いておく。参照文献を本文中に参照するときには、\verb|\cite{参照用名称}| のように書けばよい。例えば、この文の末尾には \verb|\cite{hoge09}| と書いてあるので、自動で対応する番号が振られる\cite{hoge09}\cite{hoge08}。
+
+参考文献リストの番号付けと、本文で参照したときの番号の挿入は、全部が自動で行われる。ただしこれも、第\ref{sec:toc}節で説明した目次の出力と同じで、一時ファイルを生成してからの挿入なので、正しく出力するには最低でも二回のコンパイルが必要。BibTeXを使用する場合は、\verb|platex|コマンドのあと\verb|pbibtex|コマンドを実行し、さらに2回\verb|platex|コマンドを実行するといいらしい。
+
+
+
+\subsection{付録の出力}
+
+\begin{itembox}[l]{{\tt main.tex}}
+\begin{verbatim}
+\appendix
+\include{92_appendix}		% 付録
+\end{verbatim}
+\end{itembox}
+
+必要であれば、論文の最後には付録を出力する。
+
+\verb|\appendix| コマンド以降に書いたものは、すべて付録として扱われる。付録部分の書き方は通常の本文とまったく同じで、\verb|\appendix| コマンド以降に書くだけで勝手に付録用の体裁で出力される。
