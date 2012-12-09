@@ -77,7 +77,21 @@
 
 \verb|\begin{figure}[htbp]|  の{\tt htbp}は、表示位置の優先順位の設定。基本的に\LaTeX では、図の挿入位置は強制的には指定できない。いくつか候補を指定しておくと、候補のなかの優先度の高い順に、図を入れられるスペースがあるかどうかを調べて、入れられればそこに、入れられなければ次の候補のスペースを調べる、という処理が行われる。{\tt h}はこのコマンドを書いたその場所に、{\tt t}はページの一番上に、{\tt b}はページの一番下に、{\tt p}は画像だけ別ページに、それぞれ配置する。基本的には{\tt htbp}のように全部書いておけば問題ない。
 
-\verb|\includegraphics| コマンドで、図のサイズと挿入するファイルを指定する。上の例ではサイズは {\tt width=50mm} として幅を指定したけれど、ここは他にも {\tt height=30mm} として高さを指定してもよいし、{\tt scale=0.5} として拡大率を指定してもよい。画像は、{\tt *.eps}しか扱えないので注意。変換ソフトはぐぐれば出る。AdobeさんちのPhotoshopやIllustratorは標準で対応。
+\verb|\includegraphics| コマンドで、図のサイズと挿入するファイルを指定する。上の例ではサイズは {\tt width=50mm} として幅を指定したけれど、ここは他にも {\tt height=30mm} として高さを指定してもよいし、{\tt scale=0.5} として拡大率を指定してもよい。画像は最近の \LaTeX 環境であれば{\tt *.eps}以外でも使える。ただし、{\tt bb} (Bounding Box) として画像の大きさを指定する必要があることも多い。
+以下はJPEG画像を使用する例。
+
+\begin{itembox}[l]{{\tt 03.tex}}
+\begin{verbatim}
+\begin{figure}[htbp]
+    \begin{center}
+       \fbox{\includegraphics[width=40mm,bb=0 0 640 480]{image.jpg}}
+    \end{center}
+    \caption{図の例}
+    \label{fig:sample1}
+\end{figure}
+\end{verbatim}
+\end{itembox}
+
 
 \verb|\includegraphics| を \verb|\fbox| 入れると、画像に枠を付けられる。
 
