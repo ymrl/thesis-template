@@ -52,6 +52,16 @@
 
     % make clean
 
+GitHubで論文を管理するには
+----------------------
+GitHub上にmy-thesisのようなリポジトリーを作って、以下のようにコマンドを実行してください。
+
+    git clone git://github.com/ymrl/thesis-template.git my-thesis
+    cd my-thesis
+    git remote set-url remote git@github.com:myname/thesis.git
+    git push origin master
+
+
 その他
 -----
 上記の方法でコンパイルすると生成される PDF ファイルを参照してください。
