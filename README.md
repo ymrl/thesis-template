@@ -23,6 +23,13 @@
 * .gitignore の同梱。  
   git でファイル管理をしやすいように .gitignore を同梱しました。
 
+サンプル
+-------
+2通りの生成例を用意しています。
+
+* [sample_binder_twoside.pdf（バインダー用余白設定あり・両面印刷用）](http://ymrl.github.com/thesis-template/sample_binder_twoside.pdf)：配布している構成で`make`コマンドを実行した状態
+* [sample_nobinder_oneside.pdf（バインダー用余白設定なし・片面印刷用）](http://ymrl.github.com/thesis-template/sample_nobinder_oneside.pdf)
+
 使い方
 -----
 以下のコマンドを実行することで、 PDF を生成できます。
