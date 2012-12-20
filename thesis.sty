@@ -25,6 +25,10 @@
 \def\eproject#1{\gdef\@eproject{#1}}
 \def\edate#1{\gdef\@edate{#1}}
 
+%行間設定
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\parskip}{.2\baselineskip}
+
 % 余白設定（左右対称）
 \setlength{\textwidth}{15.92cm}
 \setlength{\oddsidemargin}{0mm}
@@ -42,6 +46,7 @@
   \setlength{\textheight}{23.5cm}
   \setlength{\footskip}{18mm}
 }
+
 
 % 表紙用行間広め定義
 \newenvironment{lineskiptitle}{%
